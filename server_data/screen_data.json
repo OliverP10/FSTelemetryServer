@@ -1,0 +1,88 @@
+{
+	"dashboard": [
+		{
+			"id": 2,
+			"colSize": 2,
+			"rowSize": 2
+		},
+		{
+			"id": 0,
+			"colSize": 2,
+			"rowSize": 2
+		},
+		{
+			"id": 1,
+			"colSize": 2,
+			"rowSize": 2
+		},
+		{
+			"id": 6,
+			"colSize": 2,
+			"rowSize": 3
+		},
+		{
+			"id": 22,
+			"colSize": 4,
+			"rowSize": 2
+		},
+		{
+			"id": 3,
+			"colSize": 1,
+			"rowSize": 1
+		},
+		{
+			"id": 4,
+			"colSize": 2,
+			"rowSize": 3
+		},
+		{
+			"id": 26,
+			"colSize": 1,
+			"rowSize": 2
+		},
+		{
+			"id": 5,
+			"colSize": 1,
+			"rowSize": 2
+		}
+	],
+	"controlsystems": [
+		{
+			"id": 1,
+			"colSize": 2,
+			"rowSize": 2
+		}
+	],
+	"car": [
+		{
+			"id": 1,
+			"colSize": 2,
+			"rowSize": 2
+		},
+		{
+			"id": 26,
+			"colSize": 1,
+			"rowSize": 2
+		},
+		{
+			"id": 3,
+			"colSize": 1,
+			"rowSize": 1
+		}
+	],
+	"performance": [
+		{
+			"id": 3,
+			"colSize": 1,
+			"rowSize": 1
+		}
+	],
+	"engine": [
+		{
+			"id": 4,
+			"colSize": 1,
+			"rowSize": 2
+		}
+	],
+	"custom": []
+}

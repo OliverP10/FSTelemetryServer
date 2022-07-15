@@ -1,0 +1,163 @@
+{
+	"Throt": {
+		"nominalBoundry": {
+			"from": 0,
+			"to": 100
+		},
+		"warningBoundry": []
+	},
+	"Neu": {
+		"functionName": "boolToInt",
+		"params": {},
+		"nominalBoundry": {
+			"from": 0,
+			"to": 1
+		},
+		"warningBoundry": []
+	},
+	"RLWheSpd": {
+		"nominalBoundry": {
+			"from": -100,
+			"to": 100
+		},
+		"warningBoundry": []
+	},
+	"RRWheSpd": {
+		"nominalBoundry": {
+			"from": -100,
+			"to": 100
+		},
+		"warningBoundry": []
+	},
+	"AZ": {
+		"nominalBoundry": {
+			"from": -160,
+			"to": 160
+		},
+		"warningBoundry": []
+	},
+	"AX": {
+		"nominalBoundry": {
+			"from": -160,
+			"to": 160
+		},
+		"warningBoundry": []
+	},
+	"AY": {
+		"nominalBoundry": {
+			"from": -160,
+			"to": 160
+		},
+		"warningBoundry": []
+	},
+	"Hdg": {
+		"nominalBoundry": {
+			"from": 0,
+			"to": 360
+		},
+		"warningBoundry": []
+	},
+	"Roll": {
+		"nominalBoundry": {
+			"from": -90,
+			"to": 90
+		},
+		"warningBoundry": [
+			{
+				"from": -90,
+				"to": -20
+			},
+			{
+				"from": 20,
+				"to": 90
+			}
+		]
+	},
+	"Pitch": {
+		"nominalBoundry": {
+			"from": -180,
+			"to": 180
+		},
+		"warningBoundry": [
+			{
+				"from": -180,
+				"to": -20
+			},
+			{
+				"from": 20,
+				"to": 180
+			}
+		]
+	},
+	"OilPres": {
+		"functionName": "boolToInt",
+		"params": {},
+		"nominalBoundry": {
+			"from": 0,
+			"to": 1
+		},
+		"warningBoundry": []
+	},
+	"Gear": {
+		"nominalBoundry": {
+			"from": 0,
+			"to": 6
+		},
+		"warningBoundry": []
+	},
+	"movement_enabled": {
+		"functionName": "boolToInt",
+		"params": {},
+		"nominalBoundry": {
+			"from": 0,
+			"to": 1
+		},
+		"warningBoundry": []
+	},
+	"motor_one_forwards": {
+		"functionName": "boolToInt",
+		"params": {},
+		"nominalBoundry": {
+			"from": 0,
+			"to": 1
+		},
+		"warningBoundry": []
+	},
+	"motor_two_forwards": {
+		"functionName": "boolToInt",
+		"params": {},
+		"nominalBoundry": {
+			"from": 0,
+			"to": 1
+		},
+		"warningBoundry": []
+	},
+	"motor_three_forwards": {
+		"functionName": "boolToInt",
+		"params": {},
+		"nominalBoundry": {
+			"from": 0,
+			"to": 1
+		},
+		"warningBoundry": []
+	},
+	"motor_four_forwards": {
+		"functionName": "boolToInt",
+		"params": {},
+		"nominalBoundry": {
+			"from": 0,
+			"to": 1
+		},
+		"warningBoundry": []
+	},
+	"arm_enabled": {
+		"functionName": "boolToInt",
+		"params": {},
+		"nominalBoundry": {
+			"from": 0,
+			"to": 1
+		},
+		"warningBoundry": []
+	}
+	
+}

@@ -1,0 +1,47 @@
+{
+	"speed": {
+		"functionName": "offset",
+		"params": {
+			"offsetBy": 0
+		}
+	},
+	"wheel_rpm": {
+		"functionName": "normalize",
+		"params": {
+			"min": 500,
+			"max": 600,
+			"multiplier": 100
+		},
+		"nominalBoundry": {
+			"from": 50,
+			"to": 100
+		},
+		"warningBoundry": [
+			{
+				"from":50,
+				"to":60
+			}
+		]
+	},
+	"fuel": {
+		"functionName": "linearConvertion",
+		"params": {
+			"oldMax": 300,
+			"oldMin": 200,
+			"newMax": 100,
+			"newMin": 50
+		},
+		"nominalBoundry": {
+			"from": 50,
+			"to": 100
+		},
+		"warningBoundry": [
+			{
+				"from":50,
+				"to":60
+			}
+		]
+
+		
+	}
+}
