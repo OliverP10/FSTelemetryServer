@@ -21,8 +21,9 @@ socketIO.on("connection", (socket) => {
             //socket.emit("all-data", dataManager.applyToAll());
             socket.join("clients")
         } else if (type === "vehicle") {
-            console.log("[INFO] Rover connected")
             socket.join("vehicle")
+            console.log("[INFO] Rover connected")
+            socketIO.to("clients").emit("vehicle-connection",true)
         }
     });
     
@@ -41,7 +42,6 @@ socketIO.on("connection", (socket) => {
     socket.on("live-data", (data) => {
         dataManager.updateAllData(JSON.parse(data));
         socketIO.to("clients").emit("live-data", dataManager.applyFunctionsLive());
-        logger.writeLog(JSON.parse(data))
     });
 
     socket.on("serial-port", (data) => {
@@ -53,7 +53,10 @@ socketIO.on("connection", (socket) => {
     });
 
     socket.on('disconnect', (data) => {
-        //console.log('[INFO] Client disconnected');
+        if(!socketIO.sockets.adapter.rooms.get('vehicle')) {
+            socketIO.to("clients").emit("vehicle-connection",false)
+            console.log('[WARN] Rover disconnected');
+        }
     });
 });
 
@@ -115,6 +118,9 @@ app.get('/screens', (req, res) => {
 });
 
 app.get('/logs', (req, res) => {
+
+    logger.generateLog(dataManager.allData)
+    
     res.sendFile(__dirname.replace("server_scripts","")+logger.fileName.replace("../",""), {}, function (err) {
         if (err) {
             console.log("[ERROR] Unable to send logs to client")

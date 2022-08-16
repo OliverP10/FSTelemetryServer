@@ -28,8 +28,7 @@
 			"dataLabels": [],
 			"id": 2,
 			"options": {
-				"cameraPort": "8000",
-				"cameraLoc": "/stream.jpg"
+				"cameraIP":"192.168.0.43:8000/stream.mjpg"
 			}
 		},
 		{
@@ -57,11 +56,35 @@
 			"options": {}
 		},
 		{
-			"id": 6,
-			"title": "Rover movement",
-			"type": "movement",
+            "id": 6,
+            "title": "Rover movement",
+            "type": "movement",
+            "colSize": 2,
+            "rowSize": 3,
+            "options": {}
+        },
+		{
+			"id": 8,
+			"title": "Rover Arm Sequences",
+			"type": "arm-modes",
 			"colSize": 2,
-			"rowSize": 3,
+			"rowSize": 1,
+			"options": {}
+		},
+		{
+			"id": 9,
+			"title": "Claw",
+			"type": "claw",
+			"colSize": 2,
+			"rowSize": 1,
+			"options": {}
+		},
+		{
+			"id": 10,
+			"title": "Console",
+			"type": "console",
+			"colSize": 2,
+			"rowSize": 1,
 			"options": {}
 		},
 		{

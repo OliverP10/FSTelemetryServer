@@ -7,15 +7,34 @@ module.exports = class Logger {
         
         this.fileName = "../server_data/logs/["+new Date().toLocaleString().replaceAll("/","-").replaceAll(":","-")+"] Telemetry Log.csv"
         console.log("[INFO] Created Log file")
-        this.firstWrite = true
+        
+    }
+
+    async generateLog(_allData) {
         this.columns = []
         try {
             fs.writeFile(this.fileName, '', function (err) {
                 if (err) throw err;
             });
+            for(let key in _allData) {
+                this.columns.push(key)
+            }
+            fs.appendFile(this.fileName, this.columns.toString()+"\n", function (err) {
+                if (err) throw err;
+            });
+            
+
+            for(let i=0; i<_allData["time_stamp"].length; i++){
+                let data = new Array(this.columns.length-1)
+                for(let key in _allData) {
+                    data[this.columns.indexOf(key)] = _allData[key][i]
+                }
+                fs.appendFile(this.fileName, data.toString()+"\n", function (err) {
+                    if (err) throw err;
+                });
+            }
         } catch(err){
-            console.log("[ERROR] Unable to create log file, logging will be disabled")
-            this.enabled = false
+            console.log("[ERROR] Unable to generate log file")
         }
     }
 
