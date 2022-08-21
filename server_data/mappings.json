@@ -1,63 +1,38 @@
-{
-	"Throt": {
-		"nominalBoundry": {
-			"from": 0,
-			"to": 100
-		},
-		"warningBoundry": []
-	},
-	"Neu": {
-		"functionName": "boolToInt",
-		"params": {},
-		"nominalBoundry": {
-			"from": 0,
-			"to": 1
-		},
-		"warningBoundry": []
-	},
-	"RLWheSpd": {
-		"nominalBoundry": {
-			"from": -100,
-			"to": 100
-		},
-		"warningBoundry": []
-	},
-	"RRWheSpd": {
-		"nominalBoundry": {
-			"from": -100,
-			"to": 100
-		},
-		"warningBoundry": []
-	},
-	"AZ": {
+[
+	{
+		"label":"AZ",
 		"nominalBoundry": {
 			"from": -160,
 			"to": 160
 		},
 		"warningBoundry": []
 	},
-	"AX": {
+	{
+		"label":"AX",
 		"nominalBoundry": {
 			"from": -160,
 			"to": 160
 		},
 		"warningBoundry": []
 	},
-	"AY": {
+	{
+		"label":"AY",
 		"nominalBoundry": {
 			"from": -160,
 			"to": 160
 		},
 		"warningBoundry": []
 	},
-	"Hdg": {
+	{
+		"label":"Hdg",
 		"nominalBoundry": {
 			"from": 0,
 			"to": 360
 		},
 		"warningBoundry": []
 	},
-	"Roll": {
+	{
+		"label":"Roll",
 		"nominalBoundry": {
 			"from": -90,
 			"to": 90
@@ -73,11 +48,8 @@
 			}
 		]
 	},
-	"Pitch": {
-		"nominalBoundry": {
-			"from": -180,
-			"to": 180
-		},
+	{
+		"label":"Pitch",
 		"warningBoundry": [
 			{
 				"from": -180,
@@ -89,7 +61,8 @@
 			}
 		]
 	},
-	"OilPres": {
+	{
+		"label":"movement_enabled",
 		"functionName": "boolToInt",
 		"params": {},
 		"nominalBoundry": {
@@ -98,14 +71,8 @@
 		},
 		"warningBoundry": []
 	},
-	"Gear": {
-		"nominalBoundry": {
-			"from": 0,
-			"to": 6
-		},
-		"warningBoundry": []
-	},
-	"movement_enabled": {
+	{
+		"label":"motor_one_forwards",
 		"functionName": "boolToInt",
 		"params": {},
 		"nominalBoundry": {
@@ -114,7 +81,8 @@
 		},
 		"warningBoundry": []
 	},
-	"motor_one_forwards": {
+	{
+		"label":"motor_two_forwards",
 		"functionName": "boolToInt",
 		"params": {},
 		"nominalBoundry": {
@@ -123,7 +91,8 @@
 		},
 		"warningBoundry": []
 	},
-	"motor_two_forwards": {
+	{
+		"label":"motor_three_forwards",
 		"functionName": "boolToInt",
 		"params": {},
 		"nominalBoundry": {
@@ -132,7 +101,8 @@
 		},
 		"warningBoundry": []
 	},
-	"motor_three_forwards": {
+	{
+		"label":"motor_three_forwards",
 		"functionName": "boolToInt",
 		"params": {},
 		"nominalBoundry": {
@@ -141,7 +111,8 @@
 		},
 		"warningBoundry": []
 	},
-	"motor_four_forwards": {
+	{
+		"label":"motor_four_forwards",
 		"functionName": "boolToInt",
 		"params": {},
 		"nominalBoundry": {
@@ -150,7 +121,8 @@
 		},
 		"warningBoundry": []
 	},
-	"arm_enabled": {
+	{
+		"label":"arm_enabled",
 		"functionName": "boolToInt",
 		"params": {},
 		"nominalBoundry": {
@@ -159,5 +131,4 @@
 		},
 		"warningBoundry": []
 	}
-	
-}
+]
