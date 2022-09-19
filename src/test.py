@@ -4,6 +4,7 @@ import logging
 import json
 import time
 from typing import List
+import random
 
 class Communicaition:
     logger = logging.getLogger(__name__)
@@ -19,7 +20,7 @@ class Communicaition:
     def __init__(self) -> None:
         self.call_backs()
         try:
-            self.sio.connect('http://'+"192.168.0.13"+':3000')
+            self.sio.connect('http://'+"localhost"+':3000')
         except Exception as e:
             self.logger.critical("Unable to connect to server: ",exc_info=e)
 
@@ -30,6 +31,12 @@ class Communicaition:
             self.connected=True
             self.logger.info("Connected")
             self.sio.emit("setType", "vehicle")
+            self.demo_telem()
+
+    def demo_telem(self):
+        while True:
+            self.sio.emit('live-telemetry','{'+'"i":1,"d":'+str(random.randint(0,99))+'}')
+            time.sleep(1)
 
 comms = Communicaition()
             

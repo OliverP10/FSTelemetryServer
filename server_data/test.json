@@ -1,0 +1,380 @@
+[
+    {   
+        "type": "map",
+        "title": "Map",
+        "colSize": 2,
+        "rowSize": 4,
+        "labels": [
+            "Lon",
+            "Lat"
+        ],
+        "options": {}
+    },
+    {   
+        "type": "warnings",
+        "title": "Warnings",
+        "colSize": 2,
+        "rowSize": 2,
+        "labels": [],
+        "options": {}
+    },
+    {   
+        "type": "camera",
+        "title": "Camera",
+        "colSize": 2,
+        "rowSize": 2,
+        "labels": [],
+        "options": {
+            "cameraIP":"192.168.0.43:8000/stream.mjpg"
+        }
+    },
+    {   
+        "title": "Comms",
+        "type": "communication",
+        "colSize": 1,
+        "rowSize": 1,
+        "labels": [],
+        "options": {}
+    },
+    {   
+        "title": "Arm",
+        "type": "arm",
+        "colSize": 2,
+        "rowSize": 1,
+        "labels": [],
+        "options": {}
+    },
+    {
+        "title": "Raw Telemetry",
+        "type": "data",
+        "colSize": 1,
+        "rowSize": 2,
+        "labels": [],
+        "options": {}
+    },
+    {   
+        "name": "movement",
+        "title": "Rover movement",
+        "type": "movement",
+        "colSize": 2,
+        "rowSize": 3,
+        "labels": [],
+        "options": {}
+    },
+    {   
+        "title": "Rover Arm Sequences",
+        "type": "arm-modes",
+        "colSize": 2,
+        "rowSize": 1,
+        "labels": [],
+        "options": {}
+    },
+    {
+        "title": "Claw",
+        "type": "claw",
+        "colSize": 2,
+        "rowSize": 1,
+        "labels": [],
+        "options": {}
+    },
+    {   
+        "title": "Console",
+        "type": "console",
+        "colSize": 2,
+        "rowSize": 1,
+        "labels": [],
+        "options": {}
+    },
+    {   
+        "title": "Speed",
+        "type": "radial",
+        "colSize": 1,
+        "rowSize": 1,
+        "labels": [
+            "speed"
+        ],
+        "options": {
+            "units": "Km/h",
+            "minValue": 0,
+            "maxValue": 220,
+            "majorTicks": [
+                "0",
+                "20",
+                "40",
+                "60",
+                "80",
+                "100",
+                "120",
+                "140",
+                "160",
+                "180",
+                "200",
+                "220"
+            ],
+            "minorTicks": 2,
+            "highlights": [
+                {
+                    "from": 160,
+                    "to": 220,
+                    "color": "rgba(200, 50, 50, .75)"
+                }
+            ]
+        }
+    },
+    {
+        "title": "Speed",
+        "type": "linear",
+        "colSize": 1,
+        "rowSize": 1,
+        "labels": [
+            "speed"
+        ],
+        "options": {
+            "width": 100,
+            "units": "FuelUnitsHere",
+            "minValue": 0,
+            "maxValue": 120,
+            "majorTicks": [
+                "0",
+                "20",
+                "40",
+                "60",
+                "80",
+                "100",
+                "120"
+            ],
+            "minorTicks": 2,
+            "highlights": [
+                {
+                    "from": 0,
+                    "to": 20,
+                    "color": "rgba(200, 50, 50, .75)"
+                }
+            ]
+        }
+    },
+    {
+        "type": "graph",
+        "title": "Accelerometer",
+        "colSize": 2,
+        "rowSize": 2,
+        "labels": [
+            "AZ",
+            "AX",
+            "AY",
+            "time_stamp"
+        ]
+    },
+    {
+        "type": "graph",
+        "title": "Gyro",
+        "colSize": 2,
+        "rowSize": 2,
+        "labels": [
+            "Roll",
+            "Pitch",
+            "time_stamp"
+        ]
+    },
+    {
+        "title": "Heading",
+        "type": "radial",
+        "colSize": 1,
+        "rowSize": 2,
+        "labels": [
+            "Hdg"
+        ],
+        "options": {
+            "minValue": 0,
+            "maxValue": 360,
+            "majorTicks": [
+                "N",
+                "NE",
+                "E",
+                "SE",
+                "S",
+                "SW",
+                "W",
+                "NW",
+                "N"
+            ],
+            "minorTicks": 22,
+            "ticksAngle": 360,
+            "startAngle": 180,
+            "strokeTicks": false,
+            "highlights": false,
+            "valueBox": false,
+            "valueTextShadow": false,
+            "colorCircleInner": "#fff",
+            "colorNeedleCircleOuter": "#ccc",
+            "needleCircleSize": 15,
+            "needleCircleOuter": false,
+            "animationRule": "linear",
+            "needleType": "line",
+            "needleStart": 75,
+            "needleEnd": 99,
+            "needleWidth": 3,
+            "borders": true,
+            "borderInnerWidth": 0,
+            "borderMiddleWidth": 0,
+            "borderOuterWidth": 0,
+            "borderShadowWidth": 0,
+            "animationDuration": 900
+        }
+    },
+    {
+        "type": "graph",
+        "title": "Gyro and Accelerometer",
+        "colSize": 2,
+        "rowSize": 2,
+        "labels": [
+            "Roll",
+            "Pitch",
+            "AZ",
+            "AX",
+            "AY",
+            "time_stamp"
+        ]
+    },
+    {
+        "title": "Gear",
+        "type": "radial",
+        "colSize": 1,
+        "rowSize": 2,
+        "labels": [
+            "Gear"
+        ],
+        "options": {
+            "units": "Gear",
+            "minValue": 0,
+            "maxValue": 6,
+            "needleType": "line",
+            "needleStart": 0,
+            "needleEnd": 60,
+            "majorTicks": [
+                "N",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6"
+            ],
+            "minorTicks": 0,
+            "highlights": [
+                {
+                    "from": 5,
+                    "to": 6,
+                    "color": "rgba(200, 50, 50, .75)"
+                }
+            ]
+        }
+    },
+    {
+        "title": "Roll",
+        "type": "radial",
+        "colSize": 1,
+        "rowSize": 2,
+        "labels": [
+            "Roll"
+        ],
+        "options": {
+            
+            "width": 300,
+            "height": 300,
+            "minValue": -100,
+            "maxValue": 100,
+            "startAngle": 80,
+            "ticksAngle": 200,
+            "valueBox": true,
+            "majorTicks": [
+                -100,
+                -80,
+                -60,
+                -40,
+                -20,
+                0,
+                20,
+                40,
+                60,
+                80,
+                100
+            ],
+            "minorTicks": 2,
+            "strokeTicks": true,
+            "highlights": [
+                {
+                    "from": 50,
+                    "to": 100,
+                    "color": "rgba(200, 50, 50, .75)"
+                },
+                {
+                    "from": -100,
+                    "to": -50,
+                    "color": "rgba(200, 50, 50, .75)"
+                }
+            ],
+            "needleType": "line",
+            "needleStart": 0,
+            "needleEnd": 60,
+            "needleCircleInner": false,
+            "animationDuration": 100,
+            "animationRule": "linear",
+            "animatedValue": true,
+            "useMinPath": true
+        }
+    },
+    {
+        "title": "Pitch",
+        "type": "radial",
+        "colSize": 1,
+        "rowSize": 2,
+        "labels": [
+            "Pitch"
+        ],
+        "options": {
+            "width": 300,
+            "height": 300,
+            "minValue": -100,
+            "maxValue": 100,
+            "startAngle": 80,
+            "ticksAngle": 200,
+            "valueBox": true,
+            "majorTicks": [
+                -100,
+                -80,
+                -60,
+                -40,
+                -20,
+                0,
+                20,
+                40,
+                60,
+                80,
+                100
+            ],
+            "minorTicks": 2,
+            "strokeTicks": true,
+            "highlights": [
+                {
+                    "from": 50,
+                    "to": 100,
+                    "color": "rgba(200, 50, 50, .75)"
+                },
+                {
+                    "from": -100,
+                    "to": -50,
+                    "color": "rgba(200, 50, 50, .75)"
+                }
+            ],
+            "needleType": "line",
+            "needleStart": 0,
+            "needleEnd": 60,
+            "needleCircleInner": false,
+            "animationDuration": 100,
+            "animationRule": "linear",
+            "animatedValue": true,
+            "useMinPath": true
+        }
+    }
+]
