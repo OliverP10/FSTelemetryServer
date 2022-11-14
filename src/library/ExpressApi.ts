@@ -2,12 +2,13 @@ import { Logger } from 'winston';
 import { BuildLogger } from './Logger';
 import http from 'http';
 import express from 'express';
-import { config } from '../config/config';
+import { environment } from '../config/config';
 import labelMappingRoutes from '../routes/LabelMapping';
 import displayRoutes from '../routes/Display';
 import screenItem from '../routes/ScreenItem';
 import telemetry from '../routes/Telemetry';
 import event from '../routes/Event';
+import screen from '../routes/Screen';
 
 export class ExpressApi {
     logger: Logger;
@@ -49,9 +50,9 @@ export class ExpressApi {
         // Routes
         this.router.use('/labelMappings', labelMappingRoutes);
         this.router.use('/display', displayRoutes);
-        this.router.use('/screen', screenItem);
         this.router.use('/telemetry', telemetry);
         this.router.use('/event', event);
+        this.router.use('/screen', screen);
 
         // Ping
         this.router.get('/ping', (req, res, next) => res.status(200).json({ status: 'ok' }));
@@ -65,6 +66,6 @@ export class ExpressApi {
             });
         });
 
-        http.createServer(this.router).listen(config.api.port, () => this.logger.info(`Server is running on port ${config.api.port}`));
+        http.createServer(this.router).listen(environment.api.port, () => this.logger.info(`Server is running on port ${environment.api.port}`));
     }
 }

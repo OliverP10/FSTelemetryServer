@@ -19,6 +19,6 @@ export interface LinearConvertionParam {
 }
 
 export interface ProcessedData {
-    telemetry: ITelemetry;
+    telemetry: ITelemetry[];
     events: IEvent[];
 }

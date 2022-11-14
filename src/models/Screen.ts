@@ -19,4 +19,19 @@ const ScreenItemSchema: Schema = new Schema(
     { minimize: false, versionKey: false }
 );
 
-export default mongoose.model<IScreenItemModel>('screen_items', ScreenItemSchema);
+export interface IScreen {
+    name: string;
+    screenItems: IScreenItem[];
+}
+
+export interface IScreenModel extends IScreen, Document {}
+
+const ScreenSchema: Schema = new Schema(
+    {
+        name: { type: String, required: true, unique: true },
+        screenItems: { type: [ScreenItemSchema], required: true }
+    },
+    { minimize: false, versionKey: false }
+);
+
+export default mongoose.model<IScreenModel>('screens', ScreenSchema);

@@ -4,10 +4,12 @@ import { BuildLogger } from './Logger';
 import { DatabaseConnectionError } from '../errors/DatabaseConnectionError';
 
 export class DbManager {
-    logger: Logger;
-    uri: string;
-    connected: boolean;
-    db: mongoose.Connection;
+    private logger: Logger;
+    private uri: string;
+    private connected: boolean;
+    private db: mongoose.Connection;
+    public static sessionStart: Date;
+
     constructor() {
         this.logger = BuildLogger('DbManager');
         this.uri = 'mongodb://localhost:27017/TelemetryDisplay';
@@ -22,6 +24,7 @@ export class DbManager {
                 this.logger.error('Unable to connect');
             });
         this.db = mongoose.connection;
+        DbManager.sessionStart = new Date();
         this.db.on('error', this.logger.error.bind('MongoDB connection error'));
     }
 

@@ -3,6 +3,7 @@ import { NextFunction, Response, Request } from 'express';
 import { ILabelBoundry, ILabelMapping } from '../models/LabelMappings';
 import { IScreenItem } from '../models/ScreenItem';
 import { IDisplay } from '../models/Display';
+import { IScreen } from '../models/Screen';
 
 export const ValidateSchema = (schema: ObjectSchema) => {
     return async (req: Request, res: Response, next: NextFunction) => {
@@ -11,6 +12,7 @@ export const ValidateSchema = (schema: ObjectSchema) => {
             next();
         } catch (error) {
             //add logging
+            console.log(error);
             console.log('Joi validation error');
             return res.status(422).json({ error });
         }
@@ -70,22 +72,17 @@ export const Schemas = {
             options: Joi.object()
         })
     },
-    screenItem: {
-        create: Joi.object<IScreenItem>({
-            location: Joi.string().required(),
-            display: Joi.string()
-                .regex(/^[0-9a-fA-F]{24}$/)
-                .required(),
-            colSize: Joi.number().greater(0).less(5).required(),
-            rowSize: Joi.number().greater(0).less(5).required(),
-            options: Joi.object().required()
-        }),
-        update: Joi.object<IScreenItem>({
-            location: Joi.string(),
-            display: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
-            colSize: Joi.number().greater(0).less(5),
-            rowSize: Joi.number().greater(0).less(5),
-            options: Joi.object()
+    screen: {
+        update: Joi.object<IScreen>({
+            name: Joi.string(),
+            screenItems: Joi.array().items(
+                Joi.object<IScreenItem>({
+                    display: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+                    colSize: Joi.number().greater(0).less(5),
+                    rowSize: Joi.number().greater(0).less(5),
+                    options: Joi.object()
+                })
+            )
         })
     }
 };

@@ -1,4 +1,4 @@
-import { SocketIo } from './library/SocketIo';
+import { Comunication } from './library/Comunication';
 import { BuildLogger } from './library/Logger';
 import { Logger } from 'winston';
 import { DataManager } from './library/DataManager';
@@ -11,6 +11,6 @@ logger.info('Server starting');
 const api = new ExpressApi();
 const dbManager = new DbManager();
 const dataManager = new DataManager();
-const sioServer = new SocketIo(3000, dataManager);
+const sioServer = new Comunication();
 
 logger.info('Server Running');

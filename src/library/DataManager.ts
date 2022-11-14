@@ -5,95 +5,119 @@ import { BuildLogger } from './Logger';
 import LabelMappings, { ILabelMapping } from '../models/LabelMappings';
 import { metadatMappings } from '../config/metadataMappings';
 import Telemetry, { ITelemetryMetadata, ITelemetry } from '../models/Telemetry';
-import { SocketIo } from './SocketIo';
+import { Comunication } from './Comunication';
 import Event, { IEvent } from '../models/Event';
 import { LinearConvertionParam, normalizeParam, OffsetParam, ProcessedData } from '../interfaces/dataManager';
+import mongoose from 'mongoose';
 
 export class DataManager {
-    private logger: Logger;
-    private labelMappings: Map<string, LabelMapping>;
+    private static logger: Logger;
+    private static labelMappings: Map<string, LabelMapping>;
+    public static latestTelemetry: Map<string, ITelemetry>;
 
     constructor() {
-        this.logger = BuildLogger('DataManager');
-        this.labelMappings = new Map<string, LabelMapping>();
-
-        this.setup();
+        DataManager.logger = BuildLogger('DataManager');
+        DataManager.labelMappings = new Map<string, LabelMapping>();
+        DataManager.latestTelemetry = new Map<string, ITelemetry>();
+        DataManager.setup();
     }
 
-    public setup() {
-        this.updateLabelMappings();
+    public static setup() {
+        DataManager.updateLabelMappings();
         //LabelMappings.watch().on('change', (data) => this.updateLabelMappings());
     }
 
-    private updateLabelMappings() {
-        LabelMappings.find().then((labelMapping) => this.loadLabelMappings({ labelMapping }.labelMapping));
+    private static updateLabelMappings() {
+        LabelMappings.find().then((labelMapping) => DataManager.loadLabelMappings({ labelMapping }.labelMapping));
     }
 
-    private loadLabelMappings(labelMappings: ILabelMapping[]) {
+    private static loadLabelMappings(labelMappings: ILabelMapping[]) {
         for (let labelMapping of labelMappings) {
-            this.labelMappings.set(labelMapping.label, {
+            DataManager.labelMappings.set(labelMapping.label, {
                 functionName: labelMapping.functionName,
                 params: labelMapping.params,
                 nominalBoundry: labelMapping.nominalBoundry,
                 warningBoundry: labelMapping.warningBoundry
             });
         }
-        console.log(this.labelMappings);
     }
 
-    public addLiveData(telem: string): ProcessedData {
-        let rawTelemetry: RawTelemetry = JSON.parse(telem);
+    public static addLiveData(telem: string): ProcessedData {
+        let timeRecived = new Date();
+        let rawTelemetry: any = JSON.parse(telem);
 
-        let formattedTelem: ITelemetry = {
-            timestamp: new Date(),
-            metadata: this.decodeId(rawTelemetry.i),
-            value: rawTelemetry.d
-        };
-        formattedTelem.value = this.applyFunction(formattedTelem);
-        const telemetry = new Telemetry(formattedTelem);
-        telemetry.save().catch((error) => this.logger.error('Error while saving incoming telemetry'));
+        let telemetryToSave: ITelemetry[] = [];
+        let formattedTelemetry: ITelemetry[] = [];
+        let events: IEvent[] = [];
+
+        for (let key in rawTelemetry) {
+            let formattedTelem: ITelemetry = {
+                timestamp: timeRecived,
+                metadata: this.decodeId(parseInt(key)),
+                value: rawTelemetry[key]
+            };
+            formattedTelem.value = this.applyFunction(formattedTelem);
+            events.push(...DataManager.checkBoundrys(formattedTelem));
+            formattedTelemetry.push(formattedTelem);
+            this.latestTelemetry.set(formattedTelem.metadata.label, formattedTelem);
+            const telemetry = new Telemetry(formattedTelem);
+            telemetryToSave.push(telemetry);
+        }
+
+        Telemetry.insertMany(telemetryToSave);
+
         return {
-            telemetry: formattedTelem,
-            events: this.checkBoundrys(formattedTelem)
+            telemetry: telemetryToSave,
+            events: events
         };
     }
 
-    private decodeId(id: number): ITelemetryMetadata {
+    private static decodeId(id: number): ITelemetryMetadata {
         return metadatMappings[id];
     }
 
-    private checkBoundrys(telemetry: ITelemetry): IEvent[] {
+    private static checkBoundrys(telemetry: ITelemetry): IEvent[] {
         let events: IEvent[] = [];
-        let lableMapping = this.labelMappings.get(telemetry.metadata.label);
-        if (typeof lableMapping !== 'undefined') {
-            if (telemetry.value < lableMapping.nominalBoundry.from || telemetry.value > lableMapping.nominalBoundry.to) {
+        let labelMapping = DataManager.labelMappings.get(telemetry.metadata.label);
+
+        if (typeof labelMapping == 'undefined') {
+            return events;
+        }
+
+        if (telemetry.value < labelMapping.nominalBoundry.from || telemetry.value > labelMapping.nominalBoundry.to) {
+            events.push(
+                this.createEvent(
+                    'critical warning',
+                    telemetry.metadata.location,
+                    'nominalBoundCheck',
+                    '"' +
+                        telemetry.metadata.label +
+                        '" outside of nominal boundry of min:' +
+                        labelMapping.nominalBoundry.from +
+                        ' max:' +
+                        labelMapping.nominalBoundry.to +
+                        ' with value of:' +
+                        telemetry.value
+                )
+            );
+        }
+
+        for (let warningBound of labelMapping.warningBoundry) {
+            if (telemetry.value >= warningBound.from && telemetry.value <= warningBound.to) {
                 events.push(
                     this.createEvent(
-                        'critical warning',
+                        'warning',
                         telemetry.metadata.location,
-                        'nominalBoundCheck',
-                        'Outside of nominal boundry of min:' + lableMapping.nominalBoundry.from + ' max:' + lableMapping.nominalBoundry.to + ' with value of:' + telemetry.value
+                        'warningBoundCheck',
+                        '"' + telemetry.metadata.label + '" inside of warning boundry of min:' + warningBound.from + ' max:' + warningBound.to + ' with value of:' + telemetry.value
                     )
                 );
-            }
-
-            for (let warningBound of lableMapping.warningBoundry) {
-                if (telemetry.value >= warningBound.from && telemetry.value <= warningBound.to) {
-                    events.push(
-                        this.createEvent(
-                            'warning',
-                            telemetry.metadata.location,
-                            'warningBoundCheck',
-                            'Inside of warning boundry of min:' + warningBound.from + ' max:' + warningBound.to + ' with value of:' + telemetry.value
-                        )
-                    );
-                }
             }
         }
         return events;
     }
 
-    private createEvent(type: string, location: string, trigger: string, message: string): IEvent {
+    public static createEvent(type: string, location: string, trigger: string, message: string): IEvent {
         let formattedEvent: IEvent = {
             timestamp: new Date(),
             metadata: {
@@ -109,7 +133,7 @@ export class DataManager {
     }
 
     //Will loop through each key in live data and apply the function mapped to it in the json
-    private applyFunction(telemetry: ITelemetry) {
+    private static applyFunction(telemetry: ITelemetry) {
         let lableMapping = this.labelMappings.get(telemetry.metadata.label);
         if (typeof lableMapping !== 'undefined') {
             const functionName = lableMapping.functionName;
@@ -118,36 +142,36 @@ export class DataManager {
 
             switch (functionName) {
                 case 'offset':
-                    return this.offset(params, data);
+                    return DataManager.offset(params, data);
                 case 'normalize':
-                    return this.normalize(params, data);
+                    return DataManager.normalize(params, data);
                 case 'linearConvertion':
-                    return this.linearConvertion(params, data);
+                    return DataManager.linearConvertion(params, data);
                 case 'boolToInt':
-                    return this.booleanToInteger(data);
+                    return DataManager.booleanToInteger(data);
             }
         }
         return telemetry.value;
     }
 
     //just adds onto the data value
-    private offset(params: OffsetParam, data: number) {
+    private static offset(params: OffsetParam, data: number) {
         return data + params.offsetBy;
     }
 
     //puts the data between 0 and 100
-    private normalize(params: normalizeParam, data: number) {
+    private static normalize(params: normalizeParam, data: number) {
         return (((data - params.min) / (params.max - params.min)) * params.multiplier).toFixed(2);
     }
 
     //puts data between a range
-    private linearConvertion(params: LinearConvertionParam, data: number) {
+    private static linearConvertion(params: LinearConvertionParam, data: number) {
         const oldRange = params.oldMax - params.oldMin;
         const newRange = params.newMax - params.newMin;
         return ((data - params.oldMin) * newRange) / oldRange + params.newMin;
     }
 
-    private booleanToInteger(data: number) {
+    private static booleanToInteger(data: number) {
         if (!isNaN(data)) {
             return data;
         }
