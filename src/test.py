@@ -37,14 +37,42 @@ class Communicaition:
         while True:
             if (run):
                 data = {
-                    "2": random.randint(-21, 21),
-                    "3": random.randint(-19, 19),
 
+                    "13": random.randint(-19, 19),
+                    "14": random.randint(-19, 19),
+                    # "15": random.randint(-19, 19),
+                    # "16": random.randint(-19, 19),
+                    # "17": random.randint(-19, 19),
+                    # "18": random.randint(-19, 19),
+                    # "19": random.randint(-19, 19),
+                    # "20": random.randint(-19, 19),
+                    # "21": random.randint(-19, 19),
+                    # "22": random.randint(-19, 19),
+                    # "23": random.randint(-19, 19),
+                    # "24": random.randint(-19, 19),
+                    # "25": random.randint(-19, 19),
+                    # "26": random.randint(-19, 19),
+                    # "27": random.randint(-19, 19),
+                    # "28": random.randint(-19, 19),
+                    # "29": random.randint(-19, 19),
+                    # "30": random.randint(-19, 19),
+                    # "31": random.randint(-19, 19),
                 }
                 self.sio.emit("telemetry", json.dumps(data))
             run = False if run else True
             data = {
-                "4": random.randint(-19, 19)
+                # "1": random.randint(-19, 19),
+                # "2": random.randint(-21, 21),
+                # "3": random.randint(-19, 19),
+                # "4": random.randint(-19, 19),
+                # "5": random.randint(-19, 19),
+                # "6": random.randint(-19, 19),
+                # "7": random.randint(-19, 19),
+                # "8": random.randint(-19, 19),
+                # "9": random.randint(-19, 19), dont use
+                # "10": random.randint(-19, 19),
+                "11": random.randint(-19, 19),
+                "12": random.randint(-19, 19),
             }
             self.sio.emit("telemetry", json.dumps(data))
             time.sleep(0.5)
