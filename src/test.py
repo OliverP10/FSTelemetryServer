@@ -38,8 +38,8 @@ class Communicaition:
             if (run):
                 data = {
 
-                    "13": random.randint(-19, 19),
-                    "14": random.randint(-19, 19),
+                    # "13": random.randint(-19, 19),
+                    # "14": random.randint(-19, 19),
                     # "15": random.randint(-19, 19),
                     # "16": random.randint(-19, 19),
                     # "17": random.randint(-19, 19),
@@ -61,9 +61,9 @@ class Communicaition:
                 self.sio.emit("telemetry", json.dumps(data))
             run = False if run else True
             data = {
-                # "1": random.randint(-19, 19),
-                # "2": random.randint(-21, 21),
-                # "3": random.randint(-19, 19),
+                "1": random.randint(-19, 19),
+                "2": random.randint(-21, 21),
+                "3": random.randint(-19, 19),
                 # "4": random.randint(-19, 19),
                 # "5": random.randint(-19, 19),
                 # "6": random.randint(-19, 19),
@@ -71,8 +71,8 @@ class Communicaition:
                 # "8": random.randint(-19, 19),
                 # "9": random.randint(-19, 19), dont use
                 # "10": random.randint(-19, 19),
-                "11": random.randint(-19, 19),
-                "12": random.randint(-19, 19),
+                # "11": random.randint(-19, 19),
+                # "12": random.randint(-19, 19),
             }
             self.sio.emit("telemetry", json.dumps(data))
             time.sleep(0.5)
