@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import { Logger } from 'winston';
 import { BuildLogger } from './Logger';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 
 export class EchoServer {
     private app: express.Application;
@@ -10,6 +11,7 @@ export class EchoServer {
     constructor() {
         this.logger = BuildLogger('EchoServer');
         this.app = express();
+        this.app.use(cors());
         this.app.use(bodyParser.json()); // Use body-parser to parse the request body
         this.app.use(this.loggerMiddleware);
         this.app.post('/', this.rootHandler);
@@ -23,7 +25,7 @@ export class EchoServer {
     }
 
     private rootHandler(req: Request, res: Response) {
-        res.send();
+        res.send({});
     }
 
     private listen(port: number) {
