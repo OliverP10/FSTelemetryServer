@@ -4,6 +4,7 @@ import { Logger } from 'winston';
 import { DataManager } from './library/DataManager';
 import { DbManager } from './library/DbManger';
 import { ExpressApi } from './library/ExpressApi';
+import { EchoServer } from './library/EchoServer';
 
 const logger: Logger = BuildLogger('Server');
 
@@ -12,5 +13,6 @@ const api = new ExpressApi();
 const dbManager = new DbManager();
 const dataManager = new DataManager();
 const sioServer = new Comunication();
+const server = new EchoServer();
 
 logger.info('Server Running');
