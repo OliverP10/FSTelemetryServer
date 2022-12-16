@@ -25,5 +25,8 @@
     "socket.io": "^4.5.0",
     "ts-node": "^10.9.1",
     "winston": "^3.8.1"
+  },
+  "devDependencies": {
+    "@types/serialport": "^8.0.2"
   }
 }

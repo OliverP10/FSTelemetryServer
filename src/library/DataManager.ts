@@ -44,7 +44,15 @@ export class DataManager {
 
     public static addLiveData(telem: string): ProcessedData {
         let timeRecived = new Date();
-        let rawTelemetry: any = JSON.parse(telem);
+        let rawTelemetry: any;
+
+        try {
+            rawTelemetry = JSON.parse(telem);
+        } catch (err) {
+            DataManager.logger.warn('Unable to parse telemetry: ' + (err as Error).message);
+            let event: IEvent = DataManager.createEvent('warning', 'server', 'corruptedTelemetry', 'Unable to parse telemetry: ' + (err as Error).message);
+            Comunication.sendEvents([event]);
+        }
 
         let telemetryToSave: ITelemetry[] = [];
         let formattedTelemetry: ITelemetry[] = [];
