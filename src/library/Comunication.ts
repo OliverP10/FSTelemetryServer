@@ -42,7 +42,6 @@ export class Comunication {
                     Comunication.roverSocket = socket;
                     socket.join('vehicle');
                     Comunication.setWfifiConnectionStatus(true);
-                    Comunication.setConnectionStatus();
                 }
             });
 
@@ -69,7 +68,6 @@ export class Comunication {
             socket.on('disconnect', (data) => {
                 if (socket == Comunication.roverSocket) {
                     Comunication.setWfifiConnectionStatus(false);
-                    Comunication.setConnectionStatus();
                 }
             });
         });
@@ -91,7 +89,7 @@ export class Comunication {
         Comunication.socketIO.to('clients').emit('events', events);
     }
 
-    private static setWfifiConnectionStatus(connected: boolean) {
+    public static setWfifiConnectionStatus(connected: boolean) {
         if (connected) {
             Comunication.wifiConnected = true;
             let roverWifiEvent = DataManager.createEvent('info', 'server', 'comunication', 'Rover has gained wifi conection');
@@ -103,9 +101,10 @@ export class Comunication {
             Comunication.socketIO.to('clients').emit('vehicle-wifi-connection', false);
             Comunication.socketIO.to('clients').emit('events', [roverWifiEvent]);
         }
+        this.setConnectionStatus();
     }
 
-    private static setRfConnectionStatus(connected: boolean) {
+    public static setRfConnectionStatus(connected: boolean) {
         if (connected) {
             Comunication.rfConnected = true;
             let roverRfEvent = DataManager.createEvent('info', 'server', 'comunication', 'Rover has gained rf conection');
@@ -117,6 +116,7 @@ export class Comunication {
             Comunication.socketIO.to('clients').emit('vehicle-rf-connection', false);
             Comunication.socketIO.to('clients').emit('events', [roverRfEvent]);
         }
+        this.setConnectionStatus();
     }
 
     private static setConnectionStatus() {
