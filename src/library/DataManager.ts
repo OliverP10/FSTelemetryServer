@@ -20,7 +20,7 @@ export class DataManager {
         DataManager.labelMappings = new Map<string, LabelMapping>();
         DataManager.latestTelemetry = new Map<string, ITelemetry>();
         DataManager.setup();
-    }
+    }  
 
     public static setup() {
         DataManager.updateLabelMappings();
