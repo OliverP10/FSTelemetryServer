@@ -54,11 +54,7 @@ export class Comunication {
             });
 
             socket.on('telemetry', (data: string) => {
-                let processedData: ProcessedData = DataManager.addLiveData(data);
-                Comunication.socketIO.to('clients').emit('telemetry', processedData.telemetry);
-                if (processedData.events.length > 0) {
-                    Comunication.socketIO.to('clients').emit('events', processedData.events);
-                }
+                Comunication.recivedTelemetry(data);
             });
 
             socket.on('log', (data) => {
@@ -73,8 +69,8 @@ export class Comunication {
         });
     }
 
-    public static recivedTelemetry(data: string) {
-        let processedData: ProcessedData = DataManager.addLiveData(data);
+    public static recivedTelemetry(data: any) {
+        let processedData: ProcessedData = DataManager.addLiveData(data.toString());
         Comunication.socketIO.to('clients').emit('telemetry', processedData.telemetry);
         if (processedData.events.length > 0) {
             Comunication.socketIO.to('clients').emit('events', processedData.events);
