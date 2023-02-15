@@ -1,4 +1,6 @@
 import serialport from 'serialport';
+import { ReadlineParser } from '@serialport/parser-readline'
+
 import { Comunication } from './Comunication';
 import { Logger } from 'winston';
 import { BuildLogger } from './Logger';
@@ -8,12 +10,16 @@ import { DataManager } from './DataManager';
 export class UsbSerialReader {
     private static logger: Logger;
     private static port: serialport;
+    private static parser: ReadlineParser;
 
     constructor(devicePath: string, baudRate: number) {
         UsbSerialReader.logger = BuildLogger('UsbSerialReader');
         UsbSerialReader.port = new serialport(devicePath, { baudRate });
+
+        UsbSerialReader.parser = UsbSerialReader.port.pipe(new ReadlineParser({ delimiter: '\r\n' }))
+
         UsbSerialReader.open();
-        UsbSerialReader.port.on('data', Comunication.recivedTelemetry);
+        UsbSerialReader.parser.on('data', Comunication.recivedTelemetry);
         // UsbSerialReader.port.on('data', (data: Buffer) => {
         //     console.log(data.toString());
         // });

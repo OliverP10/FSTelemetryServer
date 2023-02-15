@@ -13,6 +13,7 @@
   "author": "Oliver",
   "license": "ISC",
   "dependencies": {
+    "@serialport/parser-readline": "^10.5.0",
     "@types/express": "^4.17.13",
     "body-parser": "^1.20.0",
     "clone": "^2.1.2",
