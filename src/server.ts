@@ -9,7 +9,9 @@ import { UsbSerialReader } from './library/UsbSerialReader';
 
 const logger: Logger = BuildLogger('Server');
 
+logger.info('Hello world');
 logger.info('Server starting');
+
 const api = new ExpressApi();
 const dbManager = new DbManager();
 const dataManager = new DataManager();
