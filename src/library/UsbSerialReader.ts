@@ -10,7 +10,7 @@ import { DataManager } from './DataManager';
 export class UsbSerialReader {
     private static logger: Logger;
     private static port: serialport;
-    private static parser: ReadlineParser;
+    private static parser: ReadlineParser; 
 
     constructor(devicePath: string, baudRate: number) {
         UsbSerialReader.logger = BuildLogger('UsbSerialReader');

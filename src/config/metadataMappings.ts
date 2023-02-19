@@ -6,7 +6,7 @@ export const metadatMappings: any = {
     "5": { label: 'HEAVE', type: 'sensor_angle', location: 'rover' },
     "6": { label: 'SURGE', type: 'sensor_angle', location: 'rover' },
     "7": { label: 'HEADING', type: 'sensor_angle', location: 'rover' },
-    "8": { label: 'ARDUINO_CONNECTED', type: 'connecion', location: 'rover' },
+    "8": { label: 'ARDUINO_CONNECTED', type: 'connection', location: 'rover' },
     "9": { label: 'LOCAITION', type: 'location', location: 'rover' },
     "10": { label: 'GEAR', type: 'gear_position', location: 'engine' },
     "11": { label: 'ARM_ENABLED', type: 'status', location: 'arm' },
