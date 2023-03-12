@@ -1,6 +1,6 @@
 import { Server, Socket } from 'socket.io';
 import { Logger } from 'winston';
-import { vehicleType } from '../common';
+import { ConnectionRoute, vehicleType } from '../common';
 import { DataManager } from './DataManager';
 import { BuildLogger } from './Logger';
 import { IEvent } from '../models/Event';
@@ -8,6 +8,7 @@ import { ProcessedData } from '../interfaces/dataManager';
 import { environment } from '../config/config';
 import { ITelemetry } from '../models/Telemetry';
 import { DefaultEventsMap } from 'socket.io/dist/typed-events';
+import { UsbSerial } from './UsbSerialReader';
 
 export class Comunication {
     private static logger: Logger;
@@ -16,6 +17,7 @@ export class Comunication {
     private static wifiConnected: boolean;
     private static rfConnected: boolean;
     private static roverSocket: Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any> | null = null;
+    private static connectionRoute: ConnectionRoute = 'wifi';
 
     constructor() {
         Comunication.logger = BuildLogger('SocketIO');
@@ -37,6 +39,7 @@ export class Comunication {
                 if (type === 'client') {
                     socket.join('clients');
                     Comunication.socketIO.to(socket.id).emit('vehicle-connection', Comunication.roverConnected);
+                    Comunication.socketIO.to('clients').emit('connecntion-route', Comunication.connectionRoute);
                     console.log('Clinet conected');
                 } else if (type === 'vehicle') {
                     Comunication.roverSocket = socket;
@@ -45,12 +48,18 @@ export class Comunication {
                 }
             });
 
-            socket.on('key-frame', (data) => {
-                Comunication.socketIO.to('vehicle').emit('key-frame', data);
+            socket.on('connecntion-route', (connecntionRoute: ConnectionRoute) => {
+                Comunication.setConnectionRoute(connecntionRoute);
             });
 
             socket.on('control-frame', (data) => {
-                Comunication.socketIO.to('vehicle').emit('control-frame', data);
+                if (this.connectionRoute == 'wifi') {
+                    Comunication.socketIO.to('vehicle').emit('control-frame', data);
+                    console.log('Sending wifi');
+                } else if (this.connectionRoute == 'rf') {
+                    UsbSerial.write(JSON.stringify(data));
+                    console.log('sending radio');
+                }
             });
 
             socket.on('telemetry', (data: string) => {
@@ -71,9 +80,19 @@ export class Comunication {
 
     public static recivedTelemetry(data: any) {
         let processedData: ProcessedData = DataManager.addLiveData(data.toString());
+        Comunication.processCustomId(processedData.telemetry);
         Comunication.socketIO.to('clients').emit('telemetry', processedData.telemetry);
         if (processedData.events.length > 0) {
             Comunication.socketIO.to('clients').emit('events', processedData.events);
+        }
+    }
+
+    public static processCustomId(telemetry: ITelemetry[]) {
+        for (const t of telemetry) {
+            if (t.metadata.label == 'RF_RADIO_CONNECTED') {
+                console.log('CONNECTED: ' + Boolean(t.value));
+                this.setRfConnectionStatus(Boolean(t.value));
+            }
         }
     }
 
@@ -133,5 +152,10 @@ export class Comunication {
             Comunication.socketIO.to('clients').emit('vehicle-connection', false);
             Comunication.socketIO.to('clients').emit('events', [roverDisconnectEvent]);
         }
+    }
+
+    private static setConnectionRoute(route: ConnectionRoute) {
+        this.connectionRoute = route;
+        Comunication.socketIO.to('clients').emit('connecntion-route', Comunication.connectionRoute);
     }
 }

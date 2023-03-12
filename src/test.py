@@ -61,9 +61,9 @@ class Communicaition:
                 # self.sio.emit("telemetry", json.dumps(data))
             run = False if run else True
             data = {
-                "1": random.randint(-19, 19),
-                "2": random.randint(-21, 21),
-                "3": random.randint(-19, 19),
+                "2": random.randint(-19, 19),
+                "3": random.randint(-21, 21),
+                "4": random.randint(-19, 19),
                 # "4": random.randint(-19, 19),
                 # "5": random.randint(-19, 19),
                 # "6": random.randint(-19, 19),

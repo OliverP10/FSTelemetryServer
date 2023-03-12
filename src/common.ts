@@ -1,1 +1,2 @@
-export const vehicleType = "Rover"
+export const vehicleType = 'Rover';
+export type ConnectionRoute = 'wifi' | 'rf';

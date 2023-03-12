@@ -20,7 +20,7 @@ export class DataManager {
         DataManager.labelMappings = new Map<string, LabelMapping>();
         DataManager.latestTelemetry = new Map<string, ITelemetry>();
         DataManager.setup();
-    }  
+    }
 
     public static setup() {
         DataManager.updateLabelMappings();
@@ -46,30 +46,30 @@ export class DataManager {
         let timeRecived = new Date();
         let rawTelemetry: any;
 
-        try {
-            rawTelemetry = JSON.parse(telem);
-        } catch (err) {
-            DataManager.logger.warn('Unable to parse telemetry: ' + (err as Error).message);
-            let event: IEvent = DataManager.createEvent('warning', 'server', 'corruptedTelemetry', 'Unable to parse telemetry: ' + (err as Error).message);
-            Comunication.sendEvents([event]);
-        }
-
         let telemetryToSave: ITelemetry[] = [];
         let formattedTelemetry: ITelemetry[] = [];
         let events: IEvent[] = [];
 
-        for (let key in rawTelemetry) {
-            let formattedTelem: ITelemetry = {
-                timestamp: timeRecived,
-                metadata: this.decodeId(parseInt(key)),
-                value: rawTelemetry[key]
-            };
-            formattedTelem.value = this.applyFunction(formattedTelem);
-            events.push(...DataManager.checkBoundrys(formattedTelem));
-            formattedTelemetry.push(formattedTelem);
-            this.latestTelemetry.set(formattedTelem.metadata.label, formattedTelem);
-            const telemetry = new Telemetry(formattedTelem);
-            telemetryToSave.push(telemetry);
+        try {
+            rawTelemetry = JSON.parse(telem);
+
+            for (let key in rawTelemetry) {
+                let formattedTelem: ITelemetry = {
+                    timestamp: timeRecived,
+                    metadata: this.decodeId(key),
+                    value: rawTelemetry[key]
+                };
+                formattedTelem.value = this.applyFunction(formattedTelem);
+                events.push(...DataManager.checkBoundrys(formattedTelem));
+                formattedTelemetry.push(formattedTelem);
+                this.latestTelemetry.set(formattedTelem.metadata.label, formattedTelem);
+                const telemetry = new Telemetry(formattedTelem);
+                telemetryToSave.push(telemetry);
+            }
+        } catch (err) {
+            DataManager.logger.warn('Unable to parse telemetry: ' + (err as Error).message);
+            let event: IEvent = DataManager.createEvent('warning', 'server', 'corruptedTelemetry', 'Unable to parse telemetry: ' + (err as Error).message);
+            Comunication.sendEvents([event]);
         }
 
         Telemetry.insertMany(telemetryToSave);
@@ -80,7 +80,10 @@ export class DataManager {
         };
     }
 
-    private static decodeId(id: number): ITelemetryMetadata {
+    private static decodeId(id: string): ITelemetryMetadata {
+        if (!(id in metadatMappings)) {
+            throw new Error('ID: ' + id + ' not found in meta data mappings');
+        }
         return metadatMappings[id];
     }
 
