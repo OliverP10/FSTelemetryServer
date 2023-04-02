@@ -75,7 +75,7 @@ class Communicaition:
                 # "12": random.randint(-19, 19),
             }
             self.sio.emit("telemetry", json.dumps(data))
-            time.sleep(0.5)
+            time.sleep(0.1)
 
 
 comms = Communicaition()

@@ -63,7 +63,9 @@ export class Comunication {
             });
 
             socket.on('telemetry', (data: string) => {
-                Comunication.recivedTelemetry(data);
+                if ((this.connectionRoute = 'wifi')) {
+                    Comunication.recivedTelemetry(data);
+                }
             });
 
             socket.on('log', (data) => {
@@ -155,7 +157,11 @@ export class Comunication {
     }
 
     private static setConnectionRoute(route: ConnectionRoute) {
-        this.connectionRoute = route;
+        Comunication.connectionRoute = route;
         Comunication.socketIO.to('clients').emit('connecntion-route', Comunication.connectionRoute);
+    }
+
+    public static getConnectionRoute() {
+        return Comunication.connectionRoute;
     }
 }

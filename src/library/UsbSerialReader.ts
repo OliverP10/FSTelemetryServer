@@ -19,10 +19,16 @@ export class UsbSerial {
         UsbSerial.parser = UsbSerial.port.pipe(new ReadlineParser({ delimiter: '\r\n' }));
 
         UsbSerial.open();
-        UsbSerial.parser.on('data', Comunication.recivedTelemetry);
+        UsbSerial.parser.on('data', this.sendTelemetry);
         // UsbSerialReader.port.on('data', (data: Buffer) => {
         //     console.log(data.toString());
         // });
+    }
+
+    private sendTelemetry(data: any) {
+        if (Comunication.getConnectionRoute() == 'rf') {
+            Comunication.recivedTelemetry(data);
+        }
     }
 
     public static open(): void {
