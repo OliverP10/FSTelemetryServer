@@ -16,7 +16,7 @@ const api = new ExpressApi();
 const dbManager = new DbManager();
 const dataManager = new DataManager();
 const sioServer = new Comunication();
-const usbSerialReader = new UsbSerial('COM5', 57600);
+const usbSerialReader = new UsbSerial();
 const server = new EchoServer();
 
 logger.info('Server Running');

@@ -12,20 +12,22 @@ export class UsbSerial {
     private static port: serialport;
     private static parser: ReadlineParser;
 
-    constructor(devicePath: string, baudRate: number) {
+    constructor() {
+        let devicePath: string = 'COM5';
+        let baudRate: number = 57600;
         UsbSerial.logger = BuildLogger('UsbSerial');
         UsbSerial.port = new serialport(devicePath, { baudRate });
 
         UsbSerial.parser = UsbSerial.port.pipe(new ReadlineParser({ delimiter: '\r\n' }));
 
         UsbSerial.open();
-        UsbSerial.parser.on('data', this.sendTelemetry);
+        UsbSerial.parser.on('data', UsbSerial.sendTelemetry);
         // UsbSerialReader.port.on('data', (data: Buffer) => {
         //     console.log(data.toString());
         // });
     }
 
-    private sendTelemetry(data: any) {
+    private static sendTelemetry(data: any) {
         if (Comunication.getConnectionRoute() == 'rf') {
             Comunication.recivedTelemetry(data);
         }
@@ -37,9 +39,10 @@ export class UsbSerial {
         });
 
         UsbSerial.port.on('close', () => {
-            UsbSerial.logger.error('Serial port disconnected');
+            UsbSerial.logger.error('Serial port disconnected - restart server');
             let event: IEvent = DataManager.createEvent('critical warning', 'server', 'receiverDisconnect', 'Serial port disconnected');
             Comunication.sendEvents([event]);
+            UsbSerial.sendTelemetry('{"0":0}');
         });
 
         UsbSerial.port.on('error', (err) => {
@@ -50,7 +53,7 @@ export class UsbSerial {
     }
 
     public static write(controlFrame: string) {
-        UsbSerial.parser.write(controlFrame, function (err) {
+        UsbSerial.port.write(controlFrame, function (err) {
             if (err) {
                 return UsbSerial.logger.error('Error on write: ', err.message);
             }

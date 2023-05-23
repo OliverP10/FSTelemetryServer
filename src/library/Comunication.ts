@@ -17,10 +17,10 @@ export class Comunication {
     private static wifiConnected: boolean;
     private static rfConnected: boolean;
     private static roverSocket: Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any> | null = null;
-    private static connectionRoute: ConnectionRoute = 'wifi';
+    private static connectionRoute: ConnectionRoute = 'rf';
 
     constructor() {
-        Comunication.logger = BuildLogger('SocketIO');
+        Comunication.logger = BuildLogger('Comunication');
         Comunication.socketIO = new Server(environment.socket.port, {
             cors: {
                 origin: '*'
@@ -40,7 +40,6 @@ export class Comunication {
                     socket.join('clients');
                     Comunication.socketIO.to(socket.id).emit('vehicle-connection', Comunication.roverConnected);
                     Comunication.socketIO.to('clients').emit('connecntion-route', Comunication.connectionRoute);
-                    console.log('Clinet conected');
                 } else if (type === 'vehicle') {
                     Comunication.roverSocket = socket;
                     socket.join('vehicle');
@@ -53,17 +52,18 @@ export class Comunication {
             });
 
             socket.on('control-frame', (data) => {
+                // console.log(JSON.stringify(data));
                 if (this.connectionRoute == 'wifi') {
                     Comunication.socketIO.to('vehicle').emit('control-frame', data);
-                    console.log('Sending wifi');
+                    // console.log('Sending wifi');
                 } else if (this.connectionRoute == 'rf') {
                     UsbSerial.write(JSON.stringify(data));
-                    console.log('sending radio');
+                    // console.log('sending radio');
                 }
             });
 
             socket.on('telemetry', (data: string) => {
-                if ((this.connectionRoute = 'wifi')) {
+                if (this.connectionRoute == 'wifi') {
                     Comunication.recivedTelemetry(data);
                 }
             });
@@ -92,7 +92,6 @@ export class Comunication {
     public static processCustomId(telemetry: ITelemetry[]) {
         for (const t of telemetry) {
             if (t.metadata.label == 'RF_RADIO_CONNECTED') {
-                console.log('CONNECTED: ' + Boolean(t.value));
                 this.setRfConnectionStatus(Boolean(t.value));
             }
         }

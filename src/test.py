@@ -64,6 +64,7 @@ class Communicaition:
                 "2": random.randint(-19, 19),
                 "3": random.randint(-21, 21),
                 "4": random.randint(-19, 19),
+                # "34": random.randint(0, 3),
                 # "4": random.randint(-19, 19),
                 # "5": random.randint(-19, 19),
                 # "6": random.randint(-19, 19),
@@ -78,4 +79,5 @@ class Communicaition:
             time.sleep(0.1)
 
 
+print(5.0 == 5)
 comms = Communicaition()
