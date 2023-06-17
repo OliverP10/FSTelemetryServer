@@ -31,5 +31,35 @@ export const metadatMappings: any = {
     '29': { label: 'FL_RIDE_HIGHT', type: 'ultra_sonic', location: 'rover' },
     '30': { label: 'BR_RIDE_HIGHT', type: 'ultra_sonic', location: 'rover' },
     '31': { label: 'BL_RIDE_HIGHT', type: 'ultra_sonic', location: 'rover' },
-    '32': { label: 'DRIVER_INSTRUCTIONS', type: 'logic', location: 'rover' }
+    '32': { label: 'DRIVER_INSTRUCTIONS', type: 'logic', location: 'rover' },
+
+    '48': { label: 'MOVEMENT_ENABLED', type: 'motor', location: 'rover' },
+    '49': { label: 'MOVEMENT_SPEED', type: 'motor', location: 'rover' },
+    '50': { label: 'MOTOR_ONE_ENABLED', type: 'motor', location: 'rover' },
+    '51': { label: 'MOTOR_ONE_FORWARD', type: 'motor', location: 'rover' },
+    '52': { label: 'MOTOR_ONE_SPEED', type: 'motor', location: 'rover' },
+    '53': { label: 'MOTOR_TWO_ENABLED', type: 'motor', location: 'rover' },
+    '54': { label: 'MOTOR_TWO_FORWARD', type: 'motor', location: 'rover' },
+    '55': { label: 'MOTOR_TWO_SPEED', type: 'motor', location: 'rover' },
+    '56': { label: 'MOTOR_THREE_ENABLED', type: 'motor', location: 'rover' },
+    '57': { label: 'MOTOR_THREE_FORWARD', type: 'motor', location: 'rover' },
+    '58': { label: 'MOTOR_THREE_SPEED', type: 'motor', location: 'rover' },
+    '59': { label: 'MOTOR_FOUR_ENABLED', type: 'motor', location: 'rover' },
+    '60': { label: 'MOTOR_FOUR_FORWARD', type: 'motor', location: 'rover' },
+    '61': { label: 'MOTOR_FOUR_SPEED', type: 'motor', location: 'rover' },
+
+    '62': { label: 'ARM_YAW', type: 'servo', location: 'arm' },
+    '63': { label: 'ARM_PITCH_1', type: 'servo', location: 'arm' },
+    '64': { label: 'ARM_PITCH_2', type: 'servo', location: 'arm' },
+    '65': { label: 'ARM_ROLL', type: 'servo', location: 'arm' },
+
+    '66': { label: 'CLAW_ENABLED', type: 'motor', location: 'arm' },
+    '67': { label: 'CLAW_FORWARD', type: 'motor', location: 'arm' },
+    '68': { label: 'CLAW_SPEED', type: 'motor', location: 'arm' },
+    '69': { label: 'CLAW_STATUS', type: 'motor', location: 'arm' },
+
+    '70': { label: 'ARM_ENABLED', type: 'logic', location: 'arm' },
+    '71': { label: 'ARM_MANULE_OVERIDE', type: 'logic', location: 'arm' },
+    '72': { label: 'ARM_STATUS', type: 'logic', location: 'arm' },
+    '73': { label: 'ARM_NEXT_STATUS', type: 'logic', location: 'arm' }
 };

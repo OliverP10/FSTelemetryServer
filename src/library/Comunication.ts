@@ -6,7 +6,7 @@ import { BuildLogger } from './Logger';
 import { IEvent } from '../models/Event';
 import { ProcessedData } from '../interfaces/dataManager';
 import { environment } from '../config/config';
-import { ITelemetry } from '../models/Telemetry';
+import Telemetry, { ITelemetry } from '../models/Telemetry';
 import { DefaultEventsMap } from 'socket.io/dist/typed-events';
 import { UsbSerial } from './UsbSerialReader';
 
@@ -52,8 +52,9 @@ export class Comunication {
             });
 
             socket.on('control-frame', (data) => {
-                // console.log(JSON.stringify(data));
+                console.log(JSON.stringify(data));
                 if (this.connectionRoute == 'wifi') {
+                    console.log(data);
                     Comunication.socketIO.to('vehicle').emit('control-frame', data);
                     // console.log('Sending wifi');
                 } else if (this.connectionRoute == 'rf') {

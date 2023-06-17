@@ -160,6 +160,8 @@ export class DataManager {
                     return DataManager.linearConvertion(params, data);
                 case 'boolToInt':
                     return DataManager.booleanToInteger(data);
+                case 'intToBool':
+                    return DataManager.integerToBoolean(data);
             }
         }
         return telemetry.value;
@@ -182,10 +184,11 @@ export class DataManager {
         return ((data - params.oldMin) * newRange) / oldRange + params.newMin;
     }
 
-    private static booleanToInteger(data: number) {
-        if (!isNaN(data)) {
-            return data;
-        }
+    private static booleanToInteger(data: boolean): number {
         return data ? 1 : 0;
+    }
+
+    private static integerToBoolean(data: number): boolean {
+        return data == 1 ? true : false;
     }
 }
