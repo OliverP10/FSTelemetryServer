@@ -12,7 +12,7 @@ export class DbManager {
 
     constructor() {
         this.logger = BuildLogger('DbManager');
-        this.uri = 'mongodb://localhost:27017/TelemetryDisplay';
+        this.uri = 'mongodb://127.0.0.1:27017/TelemetryDisplay';
         this.connected = false;
         mongoose
             .connect(this.uri, { retryWrites: true, w: 'majority', autoIndex: true })
