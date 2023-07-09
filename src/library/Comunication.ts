@@ -17,7 +17,7 @@ export class Comunication {
     private static wifiConnected: boolean;
     private static rfConnected: boolean;
     private static roverSocket: Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any> | null = null;
-    private static connectionRoute: ConnectionRoute = 'rf';
+    private static connectionRoute: ConnectionRoute = 'wifi';
 
     constructor() {
         Comunication.logger = BuildLogger('Comunication');
@@ -52,9 +52,11 @@ export class Comunication {
             });
 
             socket.on('control-frame', (data) => {
-                console.log(JSON.stringify(data));
+                if (typeof data === 'string') {
+                    data = JSON.parse(data);
+                }
+                //console.log(JSON.stringify(data));
                 if (this.connectionRoute == 'wifi') {
-                    console.log(data);
                     Comunication.socketIO.to('vehicle').emit('control-frame', data);
                     // console.log('Sending wifi');
                 } else if (this.connectionRoute == 'rf') {

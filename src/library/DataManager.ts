@@ -52,7 +52,6 @@ export class DataManager {
 
         try {
             rawTelemetry = JSON.parse(telem);
-
             for (let key in rawTelemetry) {
                 let formattedTelem: ITelemetry = {
                     timestamp: timeRecived,
@@ -82,7 +81,7 @@ export class DataManager {
 
     private static decodeId(id: string): ITelemetryMetadata {
         if (!(id in metadatMappings)) {
-            throw new Error('ID: ' + id + ' not found in meta data mappings');
+            throw new Error('ID: ' + id + ' not found in meta data mappings'); //throw error here so its caught in addLiveData
         }
         return metadatMappings[id];
     }
