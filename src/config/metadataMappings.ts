@@ -33,6 +33,8 @@ export const metadatMappings: any = {
     '31': { label: 'BL_RIDE_HIGHT', type: 'ultra_sonic', location: 'rover' },
     '32': { label: 'DRIVER_INSTRUCTIONS', type: 'logic', location: 'rover' },
 
+    '46': { label: 'STOMP_EVENT', type: 'logic', location: 'rover' },
+    '47': { label: 'STOMP_ENABLED', type: 'logic', location: 'rover' },
     '48': { label: 'MOVEMENT_ENABLED', type: 'motor', location: 'rover' },
     '49': { label: 'MOVEMENT_SPEED', type: 'motor', location: 'rover' },
     '50': { label: 'MOTOR_ONE_ENABLED', type: 'motor', location: 'rover' },
@@ -53,13 +55,27 @@ export const metadatMappings: any = {
     '64': { label: 'ARM_PITCH_2', type: 'servo', location: 'arm' },
     '65': { label: 'ARM_ROLL', type: 'servo', location: 'arm' },
 
-    '66': { label: 'CLAW_ENABLED', type: 'motor', location: 'arm' },
-    '67': { label: 'CLAW_FORWARD', type: 'motor', location: 'arm' },
-    '68': { label: 'CLAW_SPEED', type: 'motor', location: 'arm' },
-    '69': { label: 'CLAW_STATUS', type: 'motor', location: 'arm' },
+    '66': { label: 'CLAW_ENABLED', type: 'servo', location: 'arm' },
+    '67': { label: 'ARM_CLAW', type: 'servo', location: 'arm' },
+    '68': { label: 'CLAW_STATUS', type: 'servo', location: 'arm' },
+    '69': { label: 'HATCH', type: 'motor', location: 'arm' },
 
     '70': { label: 'ARM_ENABLED', type: 'logic', location: 'arm' },
     '71': { label: 'ARM_MANULE_OVERIDE', type: 'logic', location: 'arm' },
     '72': { label: 'ARM_STATUS', type: 'logic', location: 'arm' },
-    '73': { label: 'ARM_NEXT_STATUS', type: 'logic', location: 'arm' }
+    '73': { label: 'ARM_NEXT_STATUS', type: 'logic', location: 'arm' },
+
+    '80': { label: 'ARM_YAW_CURRENT', type: 'current', location: 'arm' },
+    '81': { label: 'ARM_PITCH_1_CURRENT', type: 'current', location: 'arm' },
+    '82': { label: 'ARM_PITCH_2_CURRENT', type: 'current', location: 'arm' },
+    '83': { label: 'ARM_ROLL_CURRENT', type: 'current', location: 'arm' },
+    '84': { label: 'ARM_CLAW_CURRENT', type: 'current', location: 'arm' },
+    '85': { label: 'HATCH_CURRENT', type: 'current', location: 'rover' },
+    '90': { label: 'ARM_YAW_TEMPERATURE', type: 'thermistor', location: 'arm' },
+    '91': { label: 'ARM_PITCH_1_TEMPERATURE', type: 'thermistor', location: 'arm' },
+    '92': { label: 'ARM_PITCH_2_TEMPERATURE', type: 'thermistor', location: 'arm' },
+    '93': { label: 'ARM_ROLL_TEMPERATURE', type: 'thermistor', location: 'arm' },
+    '94': { label: 'ARM_CLAW_TEMPERATURE', type: 'thermistor', location: 'arm' },
+    '95': { label: 'HATCH_TEMPERATURE', type: 'thermistor', location: 'rover' },
+    '100': { label: 'BATTERY_VOLTAGE', type: 'voltage', location: 'rover' }
 };
