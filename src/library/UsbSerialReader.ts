@@ -13,7 +13,7 @@ export class UsbSerial {
     private static parser: ReadlineParser;
 
     constructor() {
-        let devicePath: string = 'COM5';
+        let devicePath: string = 'COM3';
         let baudRate: number = 57600;
         UsbSerial.logger = BuildLogger('UsbSerial');
         UsbSerial.port = new serialport(devicePath, { baudRate });
@@ -28,6 +28,12 @@ export class UsbSerial {
     }
 
     private static sendTelemetry(data: any) {
+        if(data == '{"0":1}'){
+            Comunication.setRfConnectionStatus(true);
+        } else if(data == '{"0":0}'){
+            Comunication.setRfConnectionStatus(false);
+        }
+        
         if (Comunication.getConnectionRoute() == 'rf') {
             Comunication.recivedTelemetry(data);
         }

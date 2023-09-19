@@ -85,20 +85,13 @@ export class Comunication {
 
     public static recivedTelemetry(data: any) {
         let processedData: ProcessedData = DataManager.addLiveData(data.toString());
-        Comunication.processCustomId(processedData.telemetry);
         Comunication.socketIO.to('clients').emit('telemetry', processedData.telemetry);
         if (processedData.events.length > 0) {
             Comunication.socketIO.to('clients').emit('events', processedData.events);
         }
     }
 
-    public static processCustomId(telemetry: ITelemetry[]) {
-        for (const t of telemetry) {
-            if (t.metadata.label == 'RF_RADIO_CONNECTED') {
-                this.setRfConnectionStatus(Boolean(t.value));
-            }
-        }
-    }
+
 
     public static sendTelemetry(telemetry: ITelemetry) {
         Comunication.socketIO.to('clients').emit('telemetry', telemetry);

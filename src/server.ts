@@ -17,6 +17,6 @@ const dbManager = new DbManager();
 const dataManager = new DataManager();
 const sioServer = new Comunication();
 const usbSerialReader = new UsbSerial();
-const server = new EchoServer();
+// const server = new EchoServer();
 
 logger.info('Server Running');

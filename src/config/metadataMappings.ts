@@ -77,5 +77,21 @@ export const metadatMappings: any = {
     '93': { label: 'ARM_ROLL_TEMPERATURE', type: 'thermistor', location: 'arm' },
     '94': { label: 'ARM_CLAW_TEMPERATURE', type: 'thermistor', location: 'arm' },
     '95': { label: 'HATCH_TEMPERATURE', type: 'thermistor', location: 'rover' },
-    '100': { label: 'BATTERY_VOLTAGE', type: 'voltage', location: 'rover' }
+    '100': { label: 'BATTERY_VOLTAGE', type: 'voltage', location: 'rover' },
+
+    '110': { label: 'WHEEL_SERVO_ONE_ANGLE', type: 'angle', location: 'rover' },
+    '111': { label: 'WHEEL_SERVO_TWO_ANGLE', type: 'angle', location: 'rover' },
+    '112': { label: 'WHEEL_SERVO_THREE_ANGLE', type: 'angle', location: 'rover' },
+    '113': { label: 'WHEEL_SERVO_FOUR_ANGLE', type: 'angle', location: 'rover' },
+    '115': { label: 'MOVEMENT_MODE', type: 'logic', location: 'rover' },
+
+    '116': { label: 'WHEEL_SERVO_ONE_CURRENT', type: 'current', location: 'rover' },
+    '117': { label: 'WHEEL_SERVO_TWO_CURRENT', type: 'current', location: 'rover' },
+    '118': { label: 'WHEEL_SERVO_THREE_CURRENT', type: 'current', location: 'rover' },
+    '119': { label: 'WHEEL_SERVO_FOUR_CURRENT', type: 'current', location: 'rover' },
+
+    '120': { label: 'MOTOR_ONE_CURRENT', type: 'current', location: 'rover' },
+    '121': { label: 'MOTOR_TWO_CURRENT', type: 'current', location: 'rover' },
+    '122': { label: 'MOTOR_THREE_CURRENT', type: 'current', location: 'rover' },
+    '123': { label: 'MOTOR_FOUR_CURRENT', type: 'current', location: 'rover' },
 };
